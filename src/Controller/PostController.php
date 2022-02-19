@@ -136,7 +136,8 @@ class PostController extends AbstractController
 
         return $this->render('post/list.html.twig', [
             'posts' => $postByCats,
-            'cats' => $allCat
+            'cats' => $allCat,
+            'searchCatName' => $category->getName()
         ]);
     }
 
