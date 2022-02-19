@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Détail liste{% endblock %}
+
+{% block body %}
+    <section class="detail-post-wrapper container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-text">{{ post.content | raw}}</p>
+            <p><a href="{{ path('user_detail', { id : post.user.id }) }}" class="card-link mr-4">
+                    <img class="img-author" src="
+                                {% if post.user.avatar %}
+                                    {{ asset('photos/'~post.user.avatar) }}
+                                {% else %}
+                                    {{ asset('img/defaut.png') }}
+                                {% endif %}" alt="avatar">
+                    {{ post.user.firstname }} {{ post.user.lastname }}
+                </a></p>
+
+            <div class="container row ">
+{#                {% if app.user.pseudo==user.pseudo %}#}
+{#                    <a href="{{ path('user_modifier', { id : user.id }) }}" class="btn btn-page">Modifier</a>#}
+{#                {% endif %}#}
+                {% if app.user==post.user %}
+                <a href="{{ path('post_update', { id : post.id }) }}" class="btn btn-secondary mr-2">Modifier</a>
+                <a href="{{ path('post_delete', { id : post.id }) }}" class="btn btn-danger mr-2">Supprimer</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+        <h4 class="mt-4">Commentaires :</h4>
+        <div class="card">
+            <div class="card-body">
+            {% for comment in post.comments %}
+                <p>Auteur/trice : {{ comment.user.firstname }}</p>
+                <p>Commentaire : {{ comment.content }}</p>
+            {% endfor %}
+            </div>
+        </div>
+
+        <a href="{{ path('list_post') }}" class="btn btn-primary mt-4 mb-4">Retour</a>
+
+        {% if is_granted('ROLE_USER') %}
+        <section class="new-comment-form container">
+            <h5>Rédiger commentaire </h5>
+            {{form_start(form)}}
+            {{form_widget(form)}}
+            <button class="btn-primary btn">Commenter</button>
+            {{form_end(form)}}
+        </section>
+        {% endif %}
+    </section>
+{% endblock %}

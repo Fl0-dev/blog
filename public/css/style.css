@@ -1,0 +1,80 @@
+
+body {
+    background-color: #e1e7e2;
+}
+
+a {
+    color: #2397ac;
+}
+
+.img-user-nav {
+    width: 3rem;
+}
+/*****DETAIL-USER****/
+
+.card-user-detail {
+    width: 25rem;
+}
+
+.img-wrapper-user {
+width: 25rem;
+}
+
+.img-detail {
+    width: 100%;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*********PROFIL UPDATE*******/
+.header-profil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/******LISTE*******/
+.new-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.new-cat-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.img-author {
+    border-radius: 3rem;
+    max-width: 3rem;
+}
+
+.card {
+    border-radius: 11px;
+    top:0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    top: -5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.card-bottom {
+    display: flex;
+}
+
+.like-icon {
+    color: red;
+}
+
+.like-icon:hover,
+.like-icon:focus {
+    color: darkred;
+}

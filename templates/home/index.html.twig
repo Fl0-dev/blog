@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Accueil{% endblock %}
+
+{% block body %}
+    <section class="container">
+    <h1>Accueil</h1>
+    <br>
+    <div class="jumbotron ">
+        <h1 class="display-4 mb-3">Bienvenue sur Blog !</h1>
+        <p class="lead">C'est ici que vous trouverez des vérités à demi vrai mais surtout des demis-vérités ✨</p>
+        <hr class="my-4">
+        <p class="lead">Si vous n'êtes pas membre du blog, c'est par ici ⬇</p>
+        <a class="btn btn-primary btn-lg" href="{{ path('app_register') }}" role="button">S'inscrire</a>
+        <p class="lead">Et c'est par là que la magie opère 🎇 ⬇</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{ path('login') }}" role="button">Connexion</a>
+        </p>
+    </div>
+    </section>
+
+{% endblock %}

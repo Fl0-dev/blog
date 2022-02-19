@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Détail User{% endblock %}
+
+{% block body %}
+<section class="detail-user-wrapper container">
+    <div class="card-user-detail mx-auto">
+        {% if user == app.user%}
+        <div class="row mb-3">
+            <a href="{{ path('user_update',{id:user.id}) }}" class="btn btn-secondary mx-auto ">Modifier profil</a>
+        </div>
+        {% endif %}
+        <div class="img-wrapper-user">
+            <img class="card-img-top img-detail" src="{% if user.avatar %}
+                                       {{ asset('photos/'~user.avatar) }}
+                                   {% else %}
+                                       {{ asset('img/defaut.png') }}
+                                   {% endif %}" alt="image d'avatar">
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">{{ user.firstname }} {{ user.lastname }}</h5>
+
+            {% if user.posts %}
+                <h6>Posts de l'auteur/trice :</h6>
+            {% for post in user.posts %}
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h6 class="card-title text-info">
+                            {% for cat in post.categories %}
+                                <a href="{{ path('postBy_cat', {name:cat.name}) }}">{{ cat.name }}</a>
+                            {% endfor %}
+                        </h6>
+                        <h5 class="card-title"> {{ post.title }}</h5>
+
+                        <p class="card-text">{{ post.content|slice(0, 50) ~ '...'}} <a href="{{ path('post_detail',{id:post.id}) }}" class="card-link">Lire la suite</a></p>
+                        {#              <p class="card-text">{{ post.getContentBySize(50)}}</p>#}
+                        <div class="card-bottom">
+                            <p>Posté le {{ post.createdAt |format_datetime(locale='fr')}}</p>
+                            <a href="#" class="like-icon"><i class="fa-brands fa-gratipay"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} || Création compte{% endblock %}
+
+{% block body %}
+
+
+    <h1 class="text-center">Création compte</h1>
+    <section class="container col-8">
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.firstname) }}
+            {{ form_row(registrationForm.lastname) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+            <button type="submit" class="btn btn-primary my-2">S'inscrire</button>
+
+            <p>Nous collectons les informations fournies pour vous permettre d'être mis en relation avec des professionnels. Pour annuler votre
+                compte, rapprocher vous de nos administrateur <a  href="#">lamatch@gmail.com</a> . Nous nous engageons à
+                supprimer votre compte et vos informations 30 jours après l'annulation de votre compte.</p>
+        {{ form_end(registrationForm) }}
+    </section>
+{% endblock %}

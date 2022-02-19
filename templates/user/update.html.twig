@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Modifier profil{% endblock %}
+
+{% block body %}
+<section class="container">
+
+    <div class="update-profil-wrapper mx-auto">
+        <div class="header-profil">
+            <h1>Modifies ton profil, {{ app.user }}</h1>
+            {% if not user.avatar %}
+                <img style="width:200px;" src="{{ asset('img/defaut.png') }}"  alt="photo de profil">
+            {% else %}
+                <img  style="width:200px;" src="{{ asset('/photos/' ~ user.avatar) }}"  alt="photo de profil">
+            {% endif %}
+        </div>
+
+        <div class="row">
+                <div class="col-sm">
+
+                <div class="col-sm">
+                    {{ form_start (form) }}
+                    <div class="form-group ">
+                        {{ form_row(form.email) }}
+                    </div>
+                    <div class="form-group ">
+                        {{ form_row(form.avatar) }}
+                    </div>
+                    <div class="form-group ">
+                        {{ form_row(form.plainPassword) }}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group ">
+                        {{ form_row(form.firstname) }}
+                    </div>
+                    <div class="form-group ">
+                        {{ form_row(form.lastname) }}
+
+                    </div>
+                    <div class="form-group ">
+                        {{ form_row(form.new_password) }}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        <a href="{{ path('user_detail',{id:user.id}) }}" class="btn btn-secondary">Retour</a>
+                    </div>
+                    {{ form_end (form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Update{% endblock %}
+
+{% block body %}
+    <section class="update-post-form container">
+       <h1>Modifier un post</h1>
+            {{form_start(form)}}
+            {{form_widget(form)}}
+            <button class="btn-primary btn-lg">Modifier</button>
+            {{form_end(form)}}
+
+{#        <a href="{{ path('list_post') }}" class="btn btn-primary">Retour</a>#}
+    </section>
+
+{% endblock %}

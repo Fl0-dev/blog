@@ -2,18 +2,87 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <title>{% block title %}Blog!{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/blog-logo.svg') }}" sizes="32x32">
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('css/bootstrap-grid.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('css/bootstrap-reboot.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('css/all.css') }}" rel="stylesheet"/>
+
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="">
+        <header class="container">
+            <nav class="navbar navbar-expand-lg navbar-light mb-4">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('list_post') }}" title="Retour à l'accueil du Blog"><img src="{{ asset('img/blog-logo.svg') }}" width="30px" alt="Logo Blog"></a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('admin') }}">Admin</a>
+                            </li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li class="nav-item">
+                               <a class="nav-link" href="{{ path('user_detail', { id : app.user.id }) }}" >Profil <img class="img-user-nav" src="
+                                   {% if app.user.avatar %}
+                                       {{ asset('photos/'~app.user.avatar) }}
+                                   {% else %}
+                                       {{ asset('img/defaut.png') }}
+                                   {% endif %}" alt="avatar"></a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('new_post') }}">Post !</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                            </li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_logout')}}">Déconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <section class="container">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} mt-3">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+        </section>
+
+        {% block body %}Bonjour{% endblock %}
     </body>
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.slim.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+
+
+        <script type="text/javascript" src="{{ asset('js/all.js') }}"></script>
+    {% endblock %}
 </html>

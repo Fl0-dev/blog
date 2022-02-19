@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | AjoutComment{% endblock %}
+
+{% block body %}
+    <section class="new-comment-form container">
+        <h1>Rédiger un nouveau post </h1>
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        <button class="btn-primary btn-lg">Publier</button>
+        {{form_end(form)}}
+    </section>
+
+{% endblock %}

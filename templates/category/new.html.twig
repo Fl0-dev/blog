@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | AjoutCat{% endblock %}
+
+{% block body %}
+    <section class="new-comment-form container">
+        <h1>Créer nouvelle catégorie </h1>
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        <button class="btn-primary btn-lg">Créer</button>
+        {{form_end(form)}}
+    </section>
+
+{% endblock %}
