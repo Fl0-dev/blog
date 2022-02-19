@@ -74,7 +74,14 @@ width: 25rem;
     color: red;
 }
 
-.like-icon:hover,
-.like-icon:focus {
-    color: darkred;
+.no-like-icon {
+    color: #d2b0b0;
+    font-size: 20px;
+}
+
+.no-like-icon:hover,
+.no-like-icon:focus {
+    color: red;
+    font-size: 20px;
+    transition: all 0.5s ease;
 }
