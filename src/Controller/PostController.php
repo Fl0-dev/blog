@@ -24,7 +24,8 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository, CategoryRepository $categoryRepository): Response
     {
         $allCat = $categoryRepository->findAll();
-        $posts = $postRepository->findBy([],['created_at'=>'DESC']);
+        //$posts = $postRepository->findBy([],['created_at'=>'DESC']);
+        $posts = $postRepository->findAllFat();
         return $this->render('post/list.html.twig', [
             'posts' => $posts,
             'cats' => $allCat

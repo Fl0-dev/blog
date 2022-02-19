@@ -26,6 +26,7 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere('p.created_at between :from and :to')
             ->setParameter('from', $from)
             ->setParameter('to', $to)
+            ->orderBy('create_at','DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -41,27 +42,29 @@ class PostRepository extends ServiceEntityRepository
                     ->addSelect('u')
                     ->Where('u.firstname like :content')
                     ->orWhere('u.lastname like :content')
-
-
 //                    ->innerJoin('p.categories','c','with',':content member of c.name')
 //                    ->addSelect('c')
                     //->innerJoin(Category::class,'c','with','c.name like :content')
-
-
                     ->orWhere('p.content like :content')
                     ->orWhere('p.title like :content')
-
                     ->setParameter('content', '%'.$search.'%')
-
-
-
-
-
+                    ->orderBy('create_at','DESC')
                     ;
             }
 
             $query = $qb->getQuery();
             return $query->execute();
+    }
 
+    public function FindAllFat()
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.user','u')
+            ->addSelect('u')
+            ->join('p.categories', 'c')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }
