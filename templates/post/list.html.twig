@@ -64,6 +64,7 @@
                         <a href="{{ path('postBy_date', { date : post.createdAt | date('d-n-Y') }) }}">
                         <p>Posté le {{ post.createdAt |format_datetime(locale='fr')}}</p>
                         </a>
+                        <p>{{ post.like }}</p>
                         <a href="#" class="no-like-icon"><i class="fa-solid fa-heart"></i></a>
                     </div>
                 </div>

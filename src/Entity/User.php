@@ -48,23 +48,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
     private $comments;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: LikePost::class)]
-    private $likePosts;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: LikeComment::class)]
-    private $likeComments;
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
 
+    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'userLikes')]
+    private $postsLikes;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->likePosts = new ArrayCollection();
-        $this->likeComments = new ArrayCollection();
+        $this->postsLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,66 +241,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|LikePost[]
-     */
-    public function getLikePosts(): Collection
-    {
-        return $this->likePosts;
-    }
-
-    public function addLikePost(LikePost $likePost): self
-    {
-        if (!$this->likePosts->contains($likePost)) {
-            $this->likePosts[] = $likePost;
-            $likePost->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLikePost(LikePost $likePost): self
-    {
-        if ($this->likePosts->removeElement($likePost)) {
-            // set the owning side to null (unless already changed)
-            if ($likePost->getUser() === $this) {
-                $likePost->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|LikeComment[]
-     */
-    public function getLikeComments(): Collection
-    {
-        return $this->likeComments;
-    }
-
-    public function addLikeComment(LikeComment $likeComment): self
-    {
-        if (!$this->likeComments->contains($likeComment)) {
-            $this->likeComments[] = $likeComment;
-            $likeComment->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLikeComment(LikeComment $likeComment): self
-    {
-        if ($this->likeComments->removeElement($likeComment)) {
-            // set the owning side to null (unless already changed)
-            if ($likeComment->getUser() === $this) {
-                $likeComment->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -323,5 +259,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $name;
     }
 
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPostsLikes(): Collection
+    {
+        return $this->postsLikes;
+    }
+
+    public function addPostsLike(Post $postsLike): self
+    {
+        if (!$this->postsLikes->contains($postsLike)) {
+            $this->postsLikes[] = $postsLike;
+            $postsLike->addUserLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostsLike(Post $postsLike): self
+    {
+        if ($this->postsLikes->removeElement($postsLike)) {
+            $postsLike->removeUserLike($this);
+        }
+
+        return $this;
+    }
 
 }

@@ -40,18 +40,18 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
     private $comments;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: LikePost::class)]
-    private $likePosts;
+    #[ORM\Column(type: 'integer')]
+    private $nbLikes;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: LikeComment::class)]
-    private $likeComments;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'postsLikes')]
+    private $userLikes;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->likePosts = new ArrayCollection();
-        $this->likeComments = new ArrayCollection();
+        $this->UsersLikes = new ArrayCollection();
+        $this->userLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,66 +185,6 @@ class Post
         return $this;
     }
 
-    /**
-     * @return Collection|LikePost[]
-     */
-    public function getLikePosts(): Collection
-    {
-        return $this->likePosts;
-    }
-
-    public function addLikePost(LikePost $likePost): self
-    {
-        if (!$this->likePosts->contains($likePost)) {
-            $this->likePosts[] = $likePost;
-            $likePost->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLikePost(LikePost $likePost): self
-    {
-        if ($this->likePosts->removeElement($likePost)) {
-            // set the owning side to null (unless already changed)
-            if ($likePost->getPost() === $this) {
-                $likePost->setPost(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|LikeComment[]
-     */
-    public function getLikeComments(): Collection
-    {
-        return $this->likeComments;
-    }
-
-    public function addLikeComment(LikeComment $likeComment): self
-    {
-        if (!$this->likeComments->contains($likeComment)) {
-            $this->likeComments[] = $likeComment;
-            $likeComment->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLikeComment(LikeComment $likeComment): self
-    {
-        if ($this->likeComments->removeElement($likeComment)) {
-            // set the owning side to null (unless already changed)
-            if ($likeComment->getPost() === $this) {
-                $likeComment->setPost(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getContentBySize(int $size): string
     {
         return substr($this->content, 0, $size);
@@ -253,6 +193,42 @@ class Post
     public function __toString(): string
     {
         return $this->getTitle();
+    }
+
+    public function getNbLikes(): ?int
+    {
+        return $this->nbLikes;
+    }
+
+    public function setNbLikes(int $nbLikes): self
+    {
+        $this->nbLikes = $nbLikes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserLikes(): Collection
+    {
+        return $this->userLikes;
+    }
+
+    public function addUserLike(User $userLike): self
+    {
+        if (!$this->userLikes->contains($userLike)) {
+            $this->userLikes[] = $userLike;
+        }
+
+        return $this;
+    }
+
+    public function removeUserLike(User $userLike): self
+    {
+        $this->userLikes->removeElement($userLike);
+
+        return $this;
     }
 
 
