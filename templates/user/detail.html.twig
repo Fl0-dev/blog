@@ -37,7 +37,10 @@
                         {#              <p class="card-text">{{ post.getContentBySize(50)}}</p>#}
                         <div class="card-bottom">
                             <p>Posté le {{ post.createdAt |format_datetime(locale='fr')}}</p>
-                            <a href="#" class="like-icon"><i class="fa-solid fa-heart"></i></a>
+                            <div class="row card-bottom-right">
+                                <a href="#" class="no-like-icon mr-2"><i class="fa-solid fa-heart"></i></a>
+                                <p>{{ post.nbLikes }}</p>
+                            </div>
                         </div>
                     </div>
 
