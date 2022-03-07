@@ -1,7 +1,7 @@
 
 let btn = document.querySelector("#button");
 let results = document.querySelector('#results');
-const offset = 5;
+let offset = 5;
 
 btn.addEventListener("click", () => {
     fetch('http://127.0.0.1:8000/api?offset='+offset)
@@ -13,8 +13,10 @@ btn.addEventListener("click", () => {
         .then(
             function (content) {
                 results.innerHTML += content
+
             }
         )
+    offset += 5
 })
 
 let input = document.querySelector("input");
