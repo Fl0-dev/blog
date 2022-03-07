@@ -34,48 +34,20 @@
     <form action="/search">
         <div class="input-group">
             <input type="search" name="search" class="form-control rounded" placeholder="Rechercher un thème, un mot-clé, un article..." aria-label="Search" aria-describedby="search-addon" />
-            <button type="submit" class="btn btn-info">search</button>
+            <button type="submit" id="search" class="btn btn-info">search</button>
         </div>
     </form>
     {% if posts %}
-        {% for post in posts %}
-            <div class="card mt-2">
-                <div class="card-body">
-                    <h6 class="card-title text-info">
-                        {% for cat in post.categories %}
-                        <a href="{{ path('postBy_cat', {name:cat.name}) }}">{{ cat.name }}</a>
-                        {% endfor %}
-                    </h6>
-                    <h5 class="card-title"> {{ post.title }}</h5>
+        <div id="results">
 
-                    <p class="card-text">{{ post.content|slice(0, 50) ~ '...'}} <a href="{{ path('post_detail',{id:post.id}) }}" class="card-link">Lire la suite</a></p>
-    {#              <p class="card-text">{{ post.getContentBySize(50)}}</p>#}
+            {% include ('/post/listApi.html.twig') %}
 
-                        <p><a href="{{ path('user_detail', { id : post.user.id }) }}" class="card-link mr-4">
-                                <img class="img-author" src="
-                                    {% if post.user.avatar %}
-                                        {{ asset('photos/'~post.user.avatar) }}
-                                    {% else %}
-                                        {{ asset('img/defaut.png') }}
-                                    {% endif %}" alt="avatar">
-                                {{ post.user.firstname }} {{ post.user.lastname }}
-                        </a></p>
-                    <div class="card-bottom">
-                        <a href="{{ path('postBy_date', { date : post.createdAt | date('d-n-Y') }) }}">
-                        <p>Posté le {{ post.createdAt |format_datetime(locale='fr')}}</p>
-                        </a>
+        </div>
+        <div class="cta">
+            <button id="button" class="cta-button btn btn-info col-4">Charger plus d'articles ?</button>
+        </div>
 
-                        <div class="row card-bottom-right">
-                            <a href="#" class="no-like-icon mr-2"><i class="fa-solid fa-heart"></i></a>
-                            <p>{{ post.nbLikes }}</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        {% endfor %}
-        {% else %}
+    {% else %}
         <p>Aucun résultat, désolé 😥</p>
     {% endif %}
 </section>

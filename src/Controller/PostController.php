@@ -24,12 +24,25 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository, CategoryRepository $categoryRepository): Response
     {
         $allCat = $categoryRepository->findAll();
-        //$posts = $postRepository->findBy([],['created_at'=>'DESC']);
-        $posts = $postRepository->findAllFat();
+        $posts = $postRepository->findBy([],['created_at'=>'DESC'],5,0);
+        //$posts = $postRepository->findAllFat();
         return $this->render('post/list.html.twig', [
             'posts' => $posts,
             'cats' => $allCat
         ]);
+    }
+
+    #[Route('/api', name: 'api')]
+    public function api(Request $request, PostRepository $postRepository): Response
+    {
+        $offset = $request->get('offset');
+        $posts = $postRepository->findBy([],['created_at'=>'DESC'],5, $offset);
+
+        return $this->render('post/listApi.html.twig', [
+            'posts' => $posts
+        ]);
+
+
     }
 
     #[Route('/post/new',name:'new_post')]
@@ -160,6 +173,7 @@ class PostController extends AbstractController
     public function search(Request $request, PostRepository $postRepository, CategoryRepository $categoryRepository)
     {
         $search = $request->query->get("search");
+        //= $search = $_GET["search"];
         $allCat = $categoryRepository->findAll();
         $postSearch = $postRepository->FindBySearch($search);
 

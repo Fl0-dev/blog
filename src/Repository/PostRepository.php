@@ -64,6 +64,7 @@ class PostRepository extends ServiceEntityRepository
             ->join('p.categories', 'c')
             ->addSelect('c')
             ->orderBy('p.created_at','DESC')
+
             ->getQuery()
             ->getResult()
             ;
