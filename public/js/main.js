@@ -19,9 +19,22 @@ btn.addEventListener("click", () => {
     offset += 5
 })
 
-let input = document.querySelector("input");
-let search = document.querySelector('#search');
+let input = document.querySelector("#input");
+let searchList = document.querySelector('#searchList');
 
 input.addEventListener("keyup", ()=> {
-    fetch()
+    fetch('apiSearch/'+ input.value)
+        .then(response => {
+            console.log(response)
+                return response.json()
+            }
+        )
+        .then(tab => {
+            searchList.innerHTML="";
+                for(const post of tab) {
+                    let option = document.createElement('option');
+                    option.value = post;
+                    searchList.append(option);
+                }
+        })
 })

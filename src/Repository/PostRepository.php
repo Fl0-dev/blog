@@ -26,7 +26,7 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere('p.created_at between :from and :to')
             ->setParameter('from', $from)
             ->setParameter('to', $to)
-            ->orderBy('create_at','DESC')
+            ->orderBy('created_at','DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -48,7 +48,7 @@ class PostRepository extends ServiceEntityRepository
                     ->orWhere('p.content like :content')
                     ->orWhere('p.title like :content')
                     ->setParameter('content', '%'.$search.'%')
-                    ->orderBy('create_at','DESC')
+                    ->orderBy('p.created_at','DESC')
                     ;
             }
 

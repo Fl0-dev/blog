@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -181,5 +182,16 @@ class PostController extends AbstractController
             'posts' => $postSearch,
             'cats' => $allCat
         ]);
+    }
+
+    #[Route('apiSearch/{search}',name:'apiSearch')]
+    public function apiSearch(string $search, PostRepository $postRepository)
+    {
+        $postSearch = $postRepository->FindBySearch($search);
+        $tab=[];
+        foreach ($postSearch as $post){
+            $tab[] = $post->getTitle();
+        }
+        return new JsonResponse($tab);
     }
 }

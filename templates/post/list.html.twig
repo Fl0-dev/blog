@@ -33,8 +33,9 @@
 
     <form action="/search">
         <div class="input-group">
-            <input type="search" name="search" class="form-control rounded" placeholder="Rechercher un thème, un mot-clé, un article..." aria-label="Search" aria-describedby="search-addon" />
+            <input type="search" list="searchList" id="input" name="search" class="form-control rounded" placeholder="Rechercher un thème, un mot-clé, un article..." aria-label="Search" aria-describedby="search-addon" />
             <button type="submit" id="search" class="btn btn-info">search</button>
+            <datalist id="searchList"></datalist>
         </div>
     </form>
     {% if posts %}
